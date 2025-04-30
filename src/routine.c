@@ -51,8 +51,6 @@ int	dinner(t_philo *philo)
 {
 	if (manage_forks(philo, 1))
 		return (1);
-	if (check_died_f(philo))
-		return (1);
 	if (checker_printf(philo, "\033[0;32mis eating\033[0m"))
 	{
 		manage_forks(philo, 0);
