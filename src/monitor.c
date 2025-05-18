@@ -63,7 +63,7 @@ static int	monitor_cycle(t_data *data, long *now)
 {
 	int	dead;
 
-	usleep(1000);
+	usleep(2000);
 	pthread_mutex_lock(&data->sim_mutex);
 	if (data->simulation_ended)
 	{

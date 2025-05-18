@@ -18,12 +18,14 @@ void	take_forks(t_philo *philo)
 	{
 		pthread_mutex_lock(&philo->data->forks[philo->left_fork]);
 		print_action(philo, "\033[1;93mhas taken a fork\033[0m");
+		philo->last_meal = get_time(philo->data);
 		my_sleep(philo->data, philo->data->time_to_die + 10);
 		pthread_mutex_unlock(&philo->data->forks[philo->left_fork]);
 		return ;
 	}
 	if (philo->id % 2 == 0)
 	{
+		usleep(1000);
 		pthread_mutex_lock(&philo->data->forks[philo->left_fork]);
 		print_action(philo, "\033[1;93mhas taken a fork\033[0m");
 		pthread_mutex_lock(&philo->data->forks[philo->right_fork]);
