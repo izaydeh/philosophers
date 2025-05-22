@@ -25,13 +25,11 @@ static int	ft_isspace(int c)
 
 int	ft_atoi(const char *str)
 {
-	int		sign;
-	long	result;
 	int		i;
+	int		sign;
 
-	sign = 1;
-	result = 0;
 	i = 0;
+	sign = 1;
 	while (ft_isspace(str[i]))
 		i++;
 	if (str[i] == '-' || str[i] == '+')
@@ -40,15 +38,33 @@ int	ft_atoi(const char *str)
 			sign = -1;
 		i++;
 	}
+	return (convert_digits(str + i, sign));
+}
+
+int	convert_digits(const char *str, int sign)
+{
+	long	result;
+	int		i;
+
+	result = 0;
+	i = 0;
 	while (ft_isdigit(str[i]))
 	{
+		if (result > (LONG_MAX - (str[i] - '0')) / 10)
+		{
+			if (sign == 1)
+				return (INT_MAX);
+			else
+				return (INT_MIN);
+		}
 		result = result * 10 + (str[i] - '0');
 		i++;
 	}
 	return ((int)(result * sign));
 }
 
-static int	is_valid_number(char *str)
+
+int	is_valid_number(char *str)
 {
 	int	i;
 
@@ -63,35 +79,6 @@ static int	is_valid_number(char *str)
 	{
 		if (!ft_isdigit(str[i]))
 			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	validate_args(int argc, char **argv)
-{
-	int	i;
-	int	value;
-
-	if (argc < 5 || argc > 6)
-	{
-		write(2, "Error: Wrong number of arguments\n", 34);
-		return (0);
-	}
-	i = 1;
-	while (i < argc)
-	{
-		if (!is_valid_number(argv[i]))
-		{
-			write(2, "Error: Invalid argument (not a number)\n", 40);
-			return (0);
-		}
-		value = ft_atoi(argv[i]);
-		if (value <= 0)
-		{
-			write(2, "Error: Arguments must be greater than zero\n", 44);
-			return (0);
-		}
 		i++;
 	}
 	return (1);

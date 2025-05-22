@@ -1,6 +1,6 @@
 NAME = philo
 
-SRCS = src/main.c src/routine.c src/monitor.c src/utils1.c src/utils2.c
+SRCS = src/main.c src/routine.c src/monitor.c src/utils1.c src/utils2.c src/init.c
 OBJ_DIR = obj
 OBJ = $(SRCS:src/%.c=$(OBJ_DIR)/%.o)
 

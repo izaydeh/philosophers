@@ -12,21 +12,26 @@
 
 #include "philo.h"
 
-void	cleanup(t_data *data, pthread_t *threads)
+void	cleanup(t_data *data, pthread_t *threads, int fork_limit)
 {
 	int	i;
 
 	i = 0;
-	while (i < data->num_of_philos)
+	if (data->forks)
 	{
-		pthread_mutex_destroy(&data->forks[i]);
-		i++;
+		while (i < fork_limit)
+		{
+			pthread_mutex_destroy(&data->forks[i]);
+			i++;
+		}
+		free(data->forks);
 	}
 	pthread_mutex_destroy(&data->print_mutex);
 	pthread_mutex_destroy(&data->sim_mutex);
-	free(data->forks);
-	free(data->philos);
-	free(threads);
+	if (data->philos)
+		free(data->philos);
+	if (threads)
+		free(threads);
 }
 
 long	get_time(t_data *data)

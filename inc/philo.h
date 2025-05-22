@@ -45,6 +45,17 @@ typedef struct s_philo
 	t_data			*data;
 }	t_philo;
 
+// Init
+void	init_args(t_data *data, char **argv);
+int		init_mutexes(t_data *data);
+int		init_data(t_data *data, char **argv);
+int		init_philos(t_data *data);
+
+// Simulation
+int		init_simulation(t_data *data, char **argv, pthread_t **threads);
+int		start_simulation(t_data *data, pthread_t *threads);
+void	end_simulation(t_data *data, pthread_t *threads);
+
 // Routine
 void	*philo_routine(void *arg);
 void	take_forks(t_philo *philo);
@@ -54,12 +65,14 @@ void	eat_and_sleep(t_philo *philo);
 void	*monitor(void *arg);
 
 // Utils
-void	cleanup(t_data *data, pthread_t *threads);
+void	cleanup(t_data *data, pthread_t *threads, int fork_limit);
 long	get_time(t_data *data);
 void	my_sleep(t_data *data, long ms);
 void	print_action(t_philo *philo, char *str);
 int		ft_error(char *msg);
 int		ft_atoi(const char *str);
 int		validate_args(int argc, char **argv);
+int		convert_digits(const char *str, int sign);
+int		is_valid_number(char *str);
 
 #endif
